@@ -46,7 +46,8 @@ class ExportData implements FromArray, ShouldAutoSize, WithEvents
                         ]
                     ]
                 ]);
-                $event->sheet->getStyle('A4')->applyFromArray([
+                $colLength = count($this->domainDetailArray) + 3;
+                $event->sheet->getStyle('A'.$colLength)->applyFromArray([
 
                     'fill' => [
                         'fillType' => Fill::FILL_SOLID,
@@ -65,7 +66,9 @@ class ExportData implements FromArray, ShouldAutoSize, WithEvents
                     ]
                 ]);
                 // dd(count($this->domainDetailArray);
-                $event->sheet->getStyle('B4:H4')->applyFromArray([
+                // dd(count($this->domainDetailArray));
+                
+                $event->sheet->getStyle('B'.$colLength.':H'.$colLength)->applyFromArray([
 
                     'fill' => [
                         'fillType' => Fill::FILL_SOLID,
@@ -158,14 +161,15 @@ class ExportData implements FromArray, ShouldAutoSize, WithEvents
 
     public function array(): array
     {
+        // dd($this->ipDetailArray);
 
         $output = [];
         $domainHead = [];
         $domainHead = ['Domain', 'Country', 'Owner', 'Registrant Org', 'SPAM', 'Created on', 'ISP', 'IP'];
-        $ipHead = ['IP', 'Country', 'Owner', 'Registrant Org', 'SPAM', 'Created on', 'ISP', 'Domain'];
         array_push($output, $domainHead);
         array_push($output, $this->domainDetailArray);
         array_push($output, [' ']);
+        $ipHead = ['IP', 'Country', 'Owner', 'Registrant Org', 'SPAM', 'Created on', 'ISP', 'Domain'];
         array_push($output, $ipHead);
         array_push($output, $this->ipDetailArray);
 
